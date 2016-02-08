@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using Microsoft.Azure.Batch;
 using Microsoft.FSharp.Collections;
@@ -9,60 +8,7 @@ using NUnit.Framework;
 
 namespace Batch.Toolkit.CSharp.Tests
 {
-    public class Create<T>
-    {
-        private Create(T value, string name)
-        {
-            Value = value;
-            Name = name;
-            if (!(string.IsNullOrWhiteSpace(Name)))
-            {
-                Console.WriteLine($"{Name} was created with value {Value}.");
-            }
-        }
-
-        public T Value { get; }
-        public string Name { get; }
-
-        public Create<TR> Bind<TR>(Func<T, Create<TR>> f)
-        {
-            try
-            {
-                if (Value == null)
-                {
-                    Console.WriteLine($"{Name ?? "<anonymous>"} was null. Aborting!");
-                    return null;
-                }
-
-                if (!(string.IsNullOrWhiteSpace(Name)))
-                {
-                    Console.WriteLine($"{Name} had value {Value}. Binding...");
-                }
-
-                var result = f(Value);
-                Assert.IsNotNull(result);
-                return result;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public Create<TR> Select<TR>(Func<T, TR> f) => Bind(v => Return(f(v)));
-
-        public Create<TR> SelectMany<TR>(Func<T, Create<TR>> f) => Bind(f);
-
-        public Create<TV> SelectMany<TU, TV>(Func<T, Create<TU>> f, Func<T, TU, TV> s)
-            => SelectMany(x => f(x).Select(y => s(x, y)));
-
-        public static Create<TR> Return<TR>(TR value, string name = null) => new Create<TR>(value, name);
-    }
-
-    public static class CreateExtensions
-    {
-        public static Create<T> Lift<T>(this T value, string name = null) => Create<T>.Return(value, name);
-    }
+    
 
     [TestFixture]
     public class BasicTests
@@ -80,10 +26,10 @@ namespace Batch.Toolkit.CSharp.Tests
                                 "user"
                             }.ToFSharpList())).Lift()
                 from tryWithCatch in
-                    new TryCatchCommand(parameterizedCommand, FSharpOption<Command>.Some(simpleCommand)).Lift(
+                    new CommandWithErrorHandler(parameterizedCommand, FSharpOption<Command>.Some(simpleCommand)).Lift(
                         "try-with-catch")
                 from tryWithoutCatch in
-                    new TryCatchCommand(simpleCommand, FSharpOption<Command>.None).Lift("try-without-catch")
+                    new CommandWithErrorHandler(simpleCommand, FSharpOption<Command>.None).Lift("try-without-catch")
                 from commandSet0 in CommandSet.Zero.Lift()
                 from commandSet in new CommandSet(
                     new[]
@@ -135,11 +81,11 @@ namespace Batch.Toolkit.CSharp.Tests
                     {
                         {"name", "john"}
                     }.ToFSharpMap()).Lift()
-                from defaultTaskSpecification in TaskOperations.GetDefaultTaskSpecification(taskName).Lift()
+                from defaultTaskSpecification in TaskSpecification.Zero.Lift()
                 from jobName in JobName.NewJobName("simple-job").Lift()
                 from nullJobPriority in JobPriority.NewJobPriority(null).Lift()
                 from jobPriority in JobPriority.NewJobPriority(10).Lift()
-                from defaultJobSpecification in JobOperations.GetDefaultJobSpecification(jobName).Lift()
+                from defaultJobSpecification in JobSpecification.Zero.Lift()
                 select "done";
 
             Assert.AreEqual("done", created.Value);
@@ -179,9 +125,9 @@ namespace Batch.Toolkit.CSharp.Tests
                     new FSharpList<WorkloadUnitTemplate>(
                         new WorkloadUnitTemplate(
                             new CommandSet(
-                                new FSharpList<TryCatchCommand>(
-                                    new TryCatchCommand(simpleCommand, FSharpOption<Command>.None),
-                                    FSharpList<TryCatchCommand>.Empty),
+                                new FSharpList<CommandWithErrorHandler>(
+                                    new CommandWithErrorHandler(simpleCommand, FSharpOption<Command>.None),
+                                    FSharpList<CommandWithErrorHandler>.Empty),
                                 FSharpList<Command>.Empty),
                             LocalFiles.Zero,
                             false),

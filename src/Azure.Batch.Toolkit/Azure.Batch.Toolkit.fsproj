@@ -67,8 +67,11 @@
     <Compile Include="Configuration.fs" />
     <Compile Include="Storage.fs" />
     <Compile Include="CommonCommands.fs" />
+    <Compile Include="ScriptGenerator.fs" />
+    <Compile Include="Preparation.fs" />
     <Compile Include="PoolOperations.fs" />
     <Compile Include="JobModelOperations.fs" />
+    <Compile Include="DSL.fs" />
     <None Include="Script.fsx" />
     <None Include="paket.references" />
     <None Include="paket.template" />

@@ -12,28 +12,32 @@ type Command =
 | ParametrizedCommand of ParametrizedCommand
 and ParametrizedCommand = { Command : string; Parameters : string list} 
 
-type TryCatchCommand = {
+type CommandWithErrorHandler = {
     Try : Command;
-    Catch : Command option
+    OnError : Command option
 }
 with
     static member Zero = {
         Try = SimpleCommand String.Empty
-        Catch = None
+        OnError = None
     }
 
 type CommandSet = { 
-    TryCatchCommands : TryCatchCommand list
+    MainCommands : CommandWithErrorHandler list
     FinallyCommands : Command list
 }
 with
     static member Zero = {
-        TryCatchCommands = []
+        MainCommands = []
         FinallyCommands = []
     }
     static member (+) (a : CommandSet, b : CommandSet) = { 
-        TryCatchCommands = a.TryCatchCommands @ b.TryCatchCommands
+        MainCommands = a.MainCommands @ b.MainCommands
         FinallyCommands = a.FinallyCommands @ b.FinallyCommands
+    }
+    static member FromCommand (cmd : Command) = {
+        MainCommands = [ {Try = cmd; OnError = None}]; 
+        FinallyCommands = []
     }
 
 type LocalFiles = 
@@ -73,7 +77,7 @@ with
 
 type WorkloadArguments = 
 | WorkloadArguments of Map<string, string list>
-    with
+with
     static member Zero = Map.empty |> WorkloadArguments
     static member (+) (a : WorkloadArguments, b : WorkloadArguments) = 
         let (WorkloadArguments a_args) = a
@@ -88,7 +92,8 @@ type WorkloadSpecification = {
     WorkloadUnitTemplates : WorkloadUnitTemplate list
     WorkloadCommonLocalFiles : LocalFiles
     WorkloadArguments : WorkloadArguments
-} with
+}
+with
     static member Zero = {
         WorkloadUnitTemplates = []
         WorkloadCommonLocalFiles = LocalFiles.Zero
@@ -100,9 +105,14 @@ type WorkloadSpecification = {
         WorkloadArguments = a.WorkloadArguments + b.WorkloadArguments
     }
 
-type TaskName = | TaskName of string
+type TaskName = 
+| TaskName of string
+with 
+    static member Zero = String.Empty |> TaskName
+
 type TaskArguments = 
 | TaskArguments of Map<string, string>
+with
     static member Zero = Map.empty |> TaskArguments
     static member (+) (a : TaskArguments, b : TaskArguments) = 
         let (TaskArguments a_args) = a
@@ -127,9 +137,33 @@ type TaskSpecification = {
     TaskArguments : TaskArguments
     TaskLocalFiles : LocalFiles
 }
+with
+    static member Zero =  {
+        TaskAffinityInformation = None
+        TaskConstraints = None
+        TaskCustomBehaviors = []
+        TaskDisplayName = None
+        TaskEnvironmentSettings = []
+        TaskFilesToStage = []
+        TaskId = TaskName.Zero
+        //TaskMultiInstanceSettings = None
+        TaskResourceFiles = []
+        TaskRunElevated = false
 
-type JobName = | JobName of string
-type JobPriority = | JobPriority of Nullable<int>
+        TaskCommandSet = CommandSet.Zero
+        TaskArguments = TaskArguments.Zero
+        TaskLocalFiles = LocalFiles.Zero
+    }
+
+type JobName = 
+| JobName of string
+with
+    static member Zero = String.Empty |> JobName 
+
+type JobPriority = 
+| JobPriority of Nullable<int>
+with
+    static member Zero = Nullable<int>() |> JobPriority
 
 type JobSpecification = {
     JobCommonEnvironmentSettings : EnvironmentSetting list
