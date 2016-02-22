@@ -72,3 +72,6 @@ and AutoPool = {
     AutoPoolLifetime : PoolLifetimeOption
     AutoPoolSpecification : PoolSpecification
 }
+
+[<assembly:System.Runtime.CompilerServices.InternalsVisibleTo("Batch.Toolkit.Tests")>]
+do ()

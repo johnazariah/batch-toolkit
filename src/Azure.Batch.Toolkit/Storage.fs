@@ -75,5 +75,5 @@ module Storage =
         files 
         |> Seq.map (fun fi -> fi.Name |> toResourceFile stagingContainer)
 
-    [<assembly:System.Runtime.CompilerServices.InternalsVisibleTo("Batch.Toolkit.Tests")>]
-    do ()
+[<assembly:System.Runtime.CompilerServices.InternalsVisibleTo("Batch.Toolkit.Tests")>]
+do ()

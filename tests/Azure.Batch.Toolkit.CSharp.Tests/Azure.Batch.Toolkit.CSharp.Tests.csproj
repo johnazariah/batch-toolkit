@@ -82,7 +82,7 @@
     <ProjectReference Include="..\..\src\Azure.Batch.Toolkit\Azure.Batch.Toolkit.fsproj">
       <Project>{7d576e35-0ee6-49e6-8cf9-d9a5b0ee62b7}</Project>
       <Name>Azure.Batch.Toolkit</Name>
-      <Properties>SkipValidatePackageReferences=true</Properties>
+      <!--<Properties>SkipValidatePackageReferences=true</Properties>-->
     </ProjectReference>
   </ItemGroup>
   <Choose>

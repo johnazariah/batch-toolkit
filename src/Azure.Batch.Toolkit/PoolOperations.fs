@@ -92,5 +92,5 @@ module PoolOperations =
 
         pool |> NamedPool |> toPoolInformation
     
-    [<assembly:System.Runtime.CompilerServices.InternalsVisibleTo("Batch.Toolkit.Tests")>]
-    do ()
+[<assembly:System.Runtime.CompilerServices.InternalsVisibleTo("Batch.Toolkit.Tests")>]
+do ()

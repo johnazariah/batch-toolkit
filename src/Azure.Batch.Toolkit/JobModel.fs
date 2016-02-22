@@ -147,3 +147,23 @@ type JobSpecification = {
     JobTasks : TaskSpecification list
     JobSharedLocalFiles : LocalFiles
 }
+with
+    static member Zero = {
+        JobCommonEnvironmentSettings = []
+        JobConstraints = None
+        JobCustomBehaviors = []
+        JobDisplayName = None
+        JobId = JobName.Zero
+        JobManagerTask = None
+        JobPreparationTask = None
+        JobReleaseTask = None
+        JobMetadata = []
+        JobPoolInformation = None
+        JobPriority = None
+
+        JobTasks = []
+        JobSharedLocalFiles = LocalFiles.Zero
+    }
+
+[<assembly:System.Runtime.CompilerServices.InternalsVisibleTo("Batch.Toolkit.Tests")>]
+do ()

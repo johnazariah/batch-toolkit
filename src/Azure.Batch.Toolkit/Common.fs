@@ -20,5 +20,5 @@ module internal Common =
         |> File.ReadAllText
         |> readJson<'a>
 
-    [<assembly:System.Runtime.CompilerServices.InternalsVisibleTo("Batch.Toolkit.Tests")>]
-    do ()
+[<assembly:System.Runtime.CompilerServices.InternalsVisibleTo("Batch.Toolkit.Tests")>]
+do ()

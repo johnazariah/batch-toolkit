@@ -368,5 +368,5 @@ module WorkloadOperations =
          getJobForWorkload workload
          |> JobOperations.SubmitJobToPoolAsync batchConfiguration storageConfiguration pool
 
-    [<assembly:System.Runtime.CompilerServices.InternalsVisibleTo("Batch.Toolkit.Tests")>]
-    do ()
+[<assembly:System.Runtime.CompilerServices.InternalsVisibleTo("Batch.Toolkit.Tests")>]
+do ()

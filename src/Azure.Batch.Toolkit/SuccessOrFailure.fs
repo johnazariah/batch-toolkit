@@ -36,3 +36,6 @@ module internal SuccessOrFailure =
     let foldrM f z = List.fold (fun m a -> m >>= f a) (point z)
 
     let succeed = new SuccessOrFailureBuilder ()
+
+[<assembly:System.Runtime.CompilerServices.InternalsVisibleTo("Batch.Toolkit.Tests")>]
+do ()

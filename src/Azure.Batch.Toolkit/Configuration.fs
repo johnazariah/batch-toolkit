@@ -36,5 +36,5 @@ module Configuration =
     let GetCloudStorageAccount config =
         CloudStorageAccount (config |> toStorageCredentials, true)
     
-    [<assembly:System.Runtime.CompilerServices.InternalsVisibleTo("Batch.Toolkit.Tests")>]
-    do ()
+[<assembly:System.Runtime.CompilerServices.InternalsVisibleTo("Batch.Toolkit.Tests")>]
+do ()
