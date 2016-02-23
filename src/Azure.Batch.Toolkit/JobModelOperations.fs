@@ -16,8 +16,12 @@ module JobOperations =
 
 module WorkloadOperations =
     let SubmitWorkloadToPoolAsync batchConfiguration storageConfiguration pool workload = 
-         getJobForWorkload workload
-         |> JobOperations.SubmitJobToPoolAsync batchConfiguration storageConfiguration pool
+        let workloadIdentifier = System.DateTime.UtcNow.ToString("yyyyMMddHHmmssffff") |> int64        
+        let workloadName = sprintf "workload-%d" workloadIdentifier 
+        
+        workload
+        |> getJobForWorkload workloadName
+        |> JobOperations.SubmitJobToPoolAsync batchConfiguration storageConfiguration pool
 
 [<assembly:System.Runtime.CompilerServices.InternalsVisibleTo("Batch.Toolkit.Tests")>]
 do ()

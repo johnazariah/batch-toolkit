@@ -156,10 +156,10 @@ module internal Preparation =
         result.MaxTaskRetryCount <- Nullable(3)
         result
 
-    let getJobForWorkload workload = 
-        let getWorkloadUnitTasks =
-            let getTaskForWorkloadUnit args workloadUnit = 
-                let taskName = sprintf "workload-unit-%s" (Guid.NewGuid().ToString("D")) |> TaskName
+    let getJobForWorkload workloadName workload = 
+        let getWorkloadUnitTasks workloadName =
+            let getTaskForWorkloadUnit args workloadUnitIndex workloadUnit = 
+                let taskName = sprintf "%s-unit-%d" workloadName workloadUnitIndex |> TaskName
                 { TaskSpecification.Zero with
                     TaskId = taskName
                     TaskCommandSet = workloadUnit.WorkloadUnitCommandSet
@@ -187,10 +187,9 @@ module internal Preparation =
             |> Seq.collect (applyArgument workload)
             |> List.ofSeq
 
-        let jobName = sprintf "workload-%s" (Guid.NewGuid().ToString("D")) |> JobName   
         { JobSpecification.Zero with
-            JobId = jobName
-            JobTasks = getWorkloadUnitTasks
+            JobId = workloadName |> JobName
+            JobTasks = getWorkloadUnitTasks workloadName
             JobSharedLocalFiles = workload.WorkloadCommonLocalFiles
         }       
     
