@@ -1,6 +1,6 @@
 ﻿namespace Batch.Toolkit
 
-type internal SuccessOrFailure<'a>  = 
+type SuccessOrFailure<'a>  = 
 | Success of 'a
 | Failure of exn
 with
@@ -17,11 +17,11 @@ with
         this.Bind (fun x -> f x |> Success) 
 
 [<AutoOpen>]
-module internal SuccessOrFailure =
-    let internal (>>=) (m : SuccessOrFailure<_>) f = m.Bind (f)
-    let internal (<!>) (m : SuccessOrFailure<_>) f = m.Map (f)
-    let internal point = SuccessOrFailure<_>.Return
-    let internal getOrThrow = function
+module SuccessOrFailure =
+    let (>>=) (m : SuccessOrFailure<_>) f = m.Bind (f)
+    let (<!>) (m : SuccessOrFailure<_>) f = m.Map (f)
+    let point = SuccessOrFailure<_>.Return
+    let getOrThrow = function
     | Success x -> x
     | Failure x -> raise x
 
