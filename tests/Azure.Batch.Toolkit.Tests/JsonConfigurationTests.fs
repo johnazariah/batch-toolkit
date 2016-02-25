@@ -49,7 +49,7 @@ module JsonTests =
         let json = """{
             "StorageAccountName": "storage-account-name",
             "StorageAccountKey" : "storage-account-key",
-            "StagingContainerName" "staging-container"
+            "StagingContainerName" : "staging-container"
         }"""
 
         let config = readJson<StorageConfiguration>(json)
