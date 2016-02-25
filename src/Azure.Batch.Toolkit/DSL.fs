@@ -21,7 +21,7 @@ module DSL =
     let ``:admin`` = None
     let ``:finally`` = None
     let ``:files`` = None
-    let ``:unit`` 
+    let ``:unit_template`` 
         _ runAsAdmin 
         _ mainBlock
         _ finallyBlock
@@ -36,7 +36,7 @@ module DSL =
     let ``:range`` parameterName _ parameterValues = 
         (parameterName, parameterValues)
 
-    let ``:units`` = None
+    let ``:unit_templates`` = None
     let ``:arguments`` = None
     
     let ``:workload`` 
@@ -57,19 +57,19 @@ module internal Sample =
     let CopyOutputToAzure = ``:cmd`` "echo 'Copying output to Azure'"
     let SayHelloWorld = ``:cmd`` "echo 'Hello, world!'"
     let SayGoodbye = ``:cmd`` "echo 'Goodbye'"
-    let ReadItemFromQueue = ``:parametric_cmd`` "echo 'Reading from queue'" ``:with_params`` ["%queue_name%"]
+    let ReadItemFromQueue = ``:parametric_cmd`` "echo 'Reading from queue %queue_name%'" ``:with_params`` ["queue_name"]
     
     let workload =
         ``:workload``
-            ``:units`` 
+            ``:unit_templates`` 
                 [
-                    (``:unit`` 
+                    (``:unit_template`` 
                         ``:admin`` true 
                         ``:main`` 
                             [
                                 ``:do`` SayHelloWorld
                                 ``:try`` 
-                                    (``:parametric_cmd`` "echo 'Hello %user%'" ``:with_params`` ["%user%"]) 
+                                    (``:parametric_cmd`` "echo 'Hello %user%'" ``:with_params`` ["user"]) 
                                     ``:with`` ``:exit``
                             ] 
                         ``:finally``

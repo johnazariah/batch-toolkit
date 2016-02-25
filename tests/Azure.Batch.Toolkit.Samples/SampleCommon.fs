@@ -1,5 +1,12 @@
 ﻿namespace Azure.Batch.Toolkit.Samples
 
+///<summary>
+/// This sample serves as an example of how to use the Batch Toolkit functions.
+///
+/// We need to construct instances of BatchConfiguration and StorageConfiguration, filling them with appropriate credentials and configuration.
+///
+/// Given an instance of WorkloadSpecification, this function will run it on a default pool called "sample-pool"
+///</summary>
 [<AutoOpen>]
 module SampleCommon =
     open Batch.Toolkit
