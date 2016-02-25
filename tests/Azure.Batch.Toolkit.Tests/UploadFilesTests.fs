@@ -14,11 +14,11 @@ open System.IO
 module UploadFilesTests =
     // never check-in storage-config.json!
     let storageConfigFile = "storage-config.json"
-    let storageContainerName = ContainerName "batch-toolkit-fsharp-test"
-    let cloudStorageAccount = 
-        storageConfigFile
-        |> readConfig<StorageConfiguration> 
-        |> GetCloudStorageAccount
+    let (cloudStorageAccount, storageContainerName) = 
+        succeed {
+            let! storageConfig = storageConfigFile |> readConfig<StorageConfiguration>
+            return GetCloudStorageAccount storageConfig, ContainerName storageConfig.StagingContainerName
+        } |> getOrThrow
 
     let test cloudStorageAccount storageContainerName f =
         try

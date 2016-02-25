@@ -48,12 +48,14 @@ module JsonTests =
     let ``should be able to read storage configuration file`` () =
         let json = """{
             "StorageAccountName": "storage-account-name",
-            "StorageAccountKey" : "storage-account-key"
+            "StorageAccountKey" : "storage-account-key",
+            "StagingContainerName" "staging-container"
         }"""
 
         let config = readJson<StorageConfiguration>(json)
         config.StorageAccountName |> should equal "storage-account-name"
         config.StorageAccountKey  |> should equal "storage-account-key"
+        config.StagingContainerName  |> should equal "staging-container"
 
 //    [<Test>]
 //    let ``should be able to read task resources file`` () =

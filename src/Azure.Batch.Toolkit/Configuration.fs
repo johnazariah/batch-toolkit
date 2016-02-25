@@ -17,6 +17,7 @@ module Configuration =
     type StorageConfiguration = {
         StorageAccountName : string
         StorageAccountKey  : string
+        StagingContainerName : string
     }
 
     let internal getServiceUri c = 
@@ -30,8 +31,7 @@ module Configuration =
         BatchSharedKeyCredentials (config |> getServiceUri, config.BatchAccountName, config.BatchAccountKey) 
 
     let internal toStorageCredentials c = 
-        (c.StorageAccountName, c.StorageAccountKey)
-        |> StorageCredentials
+        StorageCredentials (c.StorageAccountName, c.StorageAccountKey)
 
     let GetCloudStorageAccount config =
         CloudStorageAccount (config |> toStorageCredentials, true)
