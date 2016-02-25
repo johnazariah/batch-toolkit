@@ -158,8 +158,8 @@ module internal Preparation =
 
     let getJobForWorkload workloadName workload = 
         let getWorkloadUnitTasks workloadName =
-            let getTaskForWorkloadUnit args workloadUnitIndex workloadUnit = 
-                let taskName = sprintf "%s-unit-%d" workloadName workloadUnitIndex |> TaskName
+            let getTaskForWorkloadUnit args argumentSetIndex workloadUnitIndex workloadUnit = 
+                let taskName = sprintf "%s-unit-%d-args-%d" workloadName workloadUnitIndex argumentSetIndex |> TaskName
                 { TaskSpecification.Zero with
                     TaskId = taskName
                     TaskCommandSet = workloadUnit.WorkloadUnitCommandSet
@@ -178,12 +178,13 @@ module internal Preparation =
             let getCrossJoinOfWorkloadArguments (WorkloadArguments wa) = 
                 getCrossJoinOfArguments wa            
             
-            let applyArgument workload args = 
+            let applyArgument workload (argIndex, args) = 
                 workload.WorkloadUnitTemplates 
-                |> List.mapi (getTaskForWorkloadUnit args)
+                |> List.mapi (getTaskForWorkloadUnit args argIndex)
 
             workload.WorkloadArguments 
             |> getCrossJoinOfWorkloadArguments
+            |> Seq.mapi (fun i a -> (i, a))
             |> Seq.collect (applyArgument workload)
             |> List.ofSeq
 
