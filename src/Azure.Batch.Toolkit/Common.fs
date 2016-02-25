@@ -14,11 +14,10 @@ module Common =
     let readJson<'a> json = JsonConvert.DeserializeObject<'a>(json)
 
     let readConfig<'a> config = 
-        let file = config |> FileInfo
-        
-        file.FullName
-        |> File.ReadAllText
-        |> readJson<'a>
+        succeed {
+            let file = config |> FileInfo        
+            return File.ReadAllText file.FullName |> readJson<'a>
+        }
 
 [<assembly:System.Runtime.CompilerServices.InternalsVisibleTo("Batch.Toolkit.Tests")>]
 do ()
