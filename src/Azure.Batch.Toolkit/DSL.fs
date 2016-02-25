@@ -9,23 +9,23 @@ open Microsoft.Azure.Batch.FileStaging
 module DSL =
     let ``:cmd`` = SimpleCommand
 
-    let ``:params`` = None
-    let ``:cmd_with_params`` command _ parameters = ParametrizedCommand { Command = command; Parameters = parameters }
+    let ``:with_params`` = None
+    let ``:parametric_cmd`` command _ parameters = ParametrizedCommand { Command = command; Parameters = parameters }
 
     let ``:do`` c = {Try = c; OnError = None }
     
     let ``:with`` = None
-    let ``:try`` c ``:with`` h = { Try = c; OnError = Some h }
+    let ``:try`` c _ h = { Try = c; OnError = Some h }
 
     let ``:main`` = None
     let ``:admin`` = None
     let ``:finally`` = None
     let ``:files`` = None
     let ``:unit`` 
-        ``:admin`` runAsAdmin 
-        ``:main`` mainBlock
-        ``:finally`` finallyBlock
-        ``:files`` localFiles = 
+        _ runAsAdmin 
+        _ mainBlock
+        _ finallyBlock
+        _ localFiles = 
         {
             WorkloadUnitCommandSet = { MainCommands = mainBlock; FinallyCommands = finallyBlock } 
             WorkloadUnitLocalFiles = localFiles |> LocalFiles
@@ -33,16 +33,16 @@ module DSL =
         }
     
     let ``:over`` = None
-    let ``:range`` parameterName ``:is`` parameterValues = 
+    let ``:range`` parameterName _ parameterValues = 
         (parameterName, parameterValues)
 
     let ``:units`` = None
     let ``:arguments`` = None
     
     let ``:workload`` 
-            ``:units`` workloadUnitTemplates 
-            ``:files`` commonFiles 
-            ``:arguments`` arguments =
+            _ workloadUnitTemplates 
+            _ commonFiles 
+            _ arguments =
         {
             WorkloadUnitTemplates = workloadUnitTemplates
             WorkloadCommonLocalFiles = commonFiles |> LocalFiles
