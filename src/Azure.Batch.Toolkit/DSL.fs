@@ -51,10 +51,13 @@ module DSL =
 
     let ``:exit`` = SimpleCommand "goto :EXIT"
 
+module internal Sample =
+    open DSL
+
     let CopyOutputToAzure = ``:cmd`` "echo 'Copying output to Azure'"
     let SayHelloWorld = ``:cmd`` "echo 'Hello, world!'"
     let SayGoodbye = ``:cmd`` "echo 'Goodbye'"
-    let ReadItemFromQueue = ``:cmd_with_params`` "echo 'Reading from queue'" ``:params`` ["%queue_name%"]
+    let ReadItemFromQueue = ``:parametric_cmd`` "echo 'Reading from queue'" ``:with_params`` ["%queue_name%"]
     
     let workload =
         ``:workload``
@@ -66,7 +69,7 @@ module DSL =
                             [
                                 ``:do`` SayHelloWorld
                                 ``:try`` 
-                                    (``:cmd_with_params`` "echo 'Hello %user%'" ``:params`` ["%user%"]) 
+                                    (``:parametric_cmd`` "echo 'Hello %user%'" ``:with_params`` ["%user%"]) 
                                     ``:with`` ``:exit``
                             ] 
                         ``:finally``
