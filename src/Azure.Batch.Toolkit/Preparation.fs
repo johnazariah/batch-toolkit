@@ -272,7 +272,7 @@ module internal Preparation =
         let cloudJob = job |> toCloudJob batchClient fileUploader poolInformation
 
         let prepareAndSubmitTask = 
-            insertCopyCommand (job.JobSharedLocalFiles = LocalFiles.Zero) 
+            insertCopyCommand (job.JobSharedLocalFiles <> LocalFiles.Zero) 
             >> prepareTaskForSubmission fileUploader 
             >> toCloudTask 
             >> submitTask batchClient jobId
