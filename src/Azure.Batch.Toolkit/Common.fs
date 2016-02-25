@@ -1,7 +1,7 @@
 ﻿namespace Batch.Toolkit
 
 [<AutoOpen>]
-module internal Common =
+module Common =
     open System
     open System.IO
     open Newtonsoft.Json
