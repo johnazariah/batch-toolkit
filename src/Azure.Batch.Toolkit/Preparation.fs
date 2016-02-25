@@ -226,18 +226,25 @@ module internal Preparation =
         } |> getOrThrow
             
     let internal prepareJobForSubmission fileUploader job =
-        let ensureJobPreparationTaskWithFiles files = function
+        let addCommonFilesToJobPrepTask files = function
         | Some pt -> 
-            { pt with TaskLocalFiles = pt.TaskLocalFiles + files }
+            { pt with 
+                TaskLocalFiles = pt.TaskLocalFiles + files
+            } |> Some
+        | None when files = LocalFiles.Zero -> None
         | None -> 
-            { TaskSpecification.Zero with TaskId = "default-job-prep" |> TaskName; TaskLocalFiles = files }
+            { TaskSpecification.Zero with 
+                TaskId = "default-job-prep" |> TaskName
+                TaskLocalFiles = files
+            } |> Some
         
-        let prepareTask' = prepareTaskForSubmission fileUploader
-        let jobManagerTaskPreparer = prepareTask' |> Option.map 
-        let jobReleaseTaskPreparer = prepareTask' |> Option.map 
-        let jobPreparationTaskPreparer j = j |> ensureJobPreparationTaskWithFiles job.JobSharedLocalFiles  |> prepareTask' |> Some
+        let prepareTask = Option.map (prepareTaskForSubmission fileUploader) 
+        let jobManagerTaskPreparer = prepareTask
+        let jobReleaseTaskPreparer = prepareTask
+        let jobPreparationTaskPreparer = addCommonFilesToJobPrepTask job.JobSharedLocalFiles >> prepareTask
 
-        job |> toPreparedJobSpecification jobManagerTaskPreparer jobReleaseTaskPreparer jobPreparationTaskPreparer
+        job 
+        |> toPreparedJobSpecification jobManagerTaskPreparer jobReleaseTaskPreparer jobPreparationTaskPreparer
 
     let submitTask (batchClient : BatchClient) (jobId : string) (task : CloudTask) = 
         batchClient.JobOperations.AddTaskAsync (jobId, task, null, null)
