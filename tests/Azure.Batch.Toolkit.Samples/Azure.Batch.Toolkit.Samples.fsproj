@@ -57,6 +57,32 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="SampleCommon.fs" />
+    <Compile Include="Sample1.fs" />
+    <None Include="Script.fsx" />
+    <None Include="paket.references" />
+    <None Include="Scripts\load-references-debug.fsx" />
+    <None Include="Scripts\load-project-debug.fsx" />
+    <Content Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Discovery" />
+    <ProjectReference Include="..\..\src\Azure.Batch.Toolkit\Azure.Batch.Toolkit.fsproj">
+      <Name>Azure.Batch.Toolkit</Name>
+      <Project>{7d576e35-0ee6-49e6-8cf9-d9a5b0ee62b7}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1')">
       <ItemGroup>
@@ -326,30 +352,4 @@
       </ItemGroup>
     </When>
   </Choose>
-  <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="SampleCommon.fs" />
-    <Compile Include="Sample1.fs" />
-    <None Include="Script.fsx" />
-    <None Include="paket.references" />
-    <None Include="Scripts\load-references-debug.fsx" />
-    <None Include="Scripts\load-project-debug.fsx" />
-    <Content Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="mscorlib" />
-    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.ServiceModel.Discovery" />
-    <ProjectReference Include="..\..\src\Azure.Batch.Toolkit\Azure.Batch.Toolkit.fsproj">
-      <Name>Azure.Batch.Toolkit</Name>
-      <Project>{7d576e35-0ee6-49e6-8cf9-d9a5b0ee62b7}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-  </ItemGroup>
 </Project>

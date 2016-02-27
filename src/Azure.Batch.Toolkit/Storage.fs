@@ -3,10 +3,7 @@
 [<AutoOpen>]
 module Storage =
     open System
-    open System.Collections.Generic
     open System.IO
-    open System.Linq
-    open System.Threading.Tasks
     open Microsoft.Azure.Batch
     open Microsoft.WindowsAzure.Storage
     open Microsoft.WindowsAzure.Storage.Blob

@@ -1,13 +1,35 @@
 (*** hide ***)
 // This block of code is omitted in the generated HTML documentation. Use 
 // it to define helpers that you do not want to show in the documentation.
-#I "../../bin"
+#I "../../bin/Azure.Batch.Toolkit"
 
 (**
-Azure.Batch.Toolkit
-======================
+Introduction to Azure Batch Toolkit
+========================
 
-Documentation
+The [Azure Batch Service][BATCH_SVC] is an exciting offering from Microsoft allowing you to build systems that can run workloads in the cloud. 
+
+An easy way to get started with Azure Batch is to identify command-line programs that are currently run on premise and "lift-and-shift" those programs to run on virtual machines in Azure.
+
+There's a [ton of documentation][BATCH_DOCS] of how to do this because the Batch Service provides a rich selection of options:
+
+* You could use the [Powershell][PS] interface to script programs to do this.
+* You could write programs using a variety of languages (C#, Python) using the [SDK and Client Libraries][SDK] available. 
+* You could write programs using a language that isn't currently supported by interacting with the [REST interface][REST]. 
+
+These approaches afford the greatest flexibility possible in interacting with the Batch Service, but they require the developers to acquire a working knowledge of the ecosystem and to become familiar with common usage patterns and idioms. 
+There are [several samples][SAMPLES] to guide this effort.
+
+However, in many cases, the developer is more familiar with their own domain, and not necessarily able (or willing) to expend the effort to become an expert in programming Azure Batch. 
+This toolkit, developed in F#, affords a simpler introduction to using the Batch Service by abstracting out the interactions with the Batch Service and allowing the developer to focus on defining and crafting their own workflows.
+
+The best way to use this toolkit would be to write your workflow in F#, because that allows for the use of the little DSL present in the toolkit.
+The library is, however, interoperable with C#, and it's possible (although not as elegant) to develop these workflows there as well.
+
+An important thing to note is that the workload you are designing can involve executables written in any language - and indeed, which run on any supported platform. 
+_The F# (or C#) requirement to use the toolkit is limited __only__ to the workflow definition and submission stages of your development experience_
+
+Let's get started by installing the library from NuGet
 
 <div class="row">
   <div class="span1"></div>
@@ -20,33 +42,26 @@ Documentation
   <div class="span1"></div>
 </div>
 
-Example
--------
-
-This example demonstrates using a function defined in this sample library.
-
+[BATCH_SVC]: https://azure.microsoft.com/en-us/services/batch/
+[BATCH_DOCS]: https://azure.microsoft.com/en-us/documentation/services/batch/
+[PS]: https://msdn.microsoft.com/library/azure/dn865466.aspx
+[SDK]: https://msdn.microsoft.com/library/azure/dn865466.aspx
+[REST]: https://msdn.microsoft.com/library/azure/dn820158.aspx
+[SAMPLES]: https://github.com/Azure/azure-batch-samples/tree/master/CSharp
 *)
-#r "Azure.Batch.Toolkit.dll"
-open Azure.Batch.Toolkit
-
-printfn "hello = %i" <| Library.hello 0
 
 (**
-Some more info
-
 Samples & documentation
 -----------------------
 
-The library comes with comprehensible documentation. 
-It can include tutorials automatically generated from `*.fsx` files in [the content folder][content]. 
-The API reference is automatically generated from Markdown comments in the library implementation.
+1. [Tutorial 0][T0] Get your development environment set up for using Azure Batch, and the toolkit
+1. [Tutorial 1][T1] Use the DSL to create your first workload with a simple command and submit it
 
- * [Tutorial](tutorial.html) contains a further explanation of this sample library.
+[T0]: tutorial0.html
+[T1]: tutorial1.html
+*)
 
- * [API Reference](reference/index.html) contains automatically generated documentation for all types, modules
-   and functions in the library. This includes additional brief samples on using most of the
-   functions.
- 
+(**
 Contributing and copyright
 --------------------------
 

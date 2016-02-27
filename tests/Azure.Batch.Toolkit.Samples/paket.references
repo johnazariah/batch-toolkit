@@ -1,4 +1,5 @@
 group Toolkit
     Azure.Batch
+    FSharp.Core
     FSharpx.Core
     FSharp.Data
