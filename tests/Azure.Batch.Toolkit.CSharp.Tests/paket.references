@@ -1,6 +1,9 @@
-NUnit
-NUnit.Runners
-Azure.Batch
-FSharp.Core redirects: force
-FSharpx.Core
-Newtonsoft.Json redirects: force
+group Toolkit
+    Azure.Batch
+    FSharp.Core
+    FSharpx.Core
+    Newtonsoft.Json
+
+group Test
+    NUnit
+    NUnit.Runners

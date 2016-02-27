@@ -1,3 +1,5 @@
-Azure.Batch
-FSharpx.Core
-FSharp.Data
+group Toolkit
+    Azure.Batch
+	FSharp.Core
+    FSharpx.Core
+    FSharp.Data

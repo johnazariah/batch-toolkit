@@ -9,7 +9,7 @@
 // for binaries output to root bin folder please add the filename only to the 
 // referenceBinaries list below in order to generate documentation for the binaries.
 // (This is the original behaviour of ProjectScaffold prior to multi project support)
-let referenceBinaries = []
+let referenceBinaries = ["Azure.Batch.Toolkit\Batch.Toolkit.dll"]
 // Web site location for the generated documentation
 let website = "/batch-toolkit"
 
@@ -27,8 +27,8 @@ let info =
 // For typical project, no changes are needed below
 // --------------------------------------------------------------------------------------
 
-#load "../../packages/FSharp.Formatting/FSharp.Formatting.fsx"
-#I "../../packages/FAKE/tools/"
+#load "../../packages/build/FSharp.Formatting/FSharp.Formatting.fsx"
+#I "../../packages/build/FAKE/tools/"
 #r "FakeLib.dll"
 open Fake
 open System.IO
@@ -50,7 +50,7 @@ let content    = __SOURCE_DIRECTORY__ @@ "../content"
 let output     = __SOURCE_DIRECTORY__ @@ "../output"
 let files      = __SOURCE_DIRECTORY__ @@ "../files"
 let templates  = __SOURCE_DIRECTORY__ @@ "templates"
-let formatting = __SOURCE_DIRECTORY__ @@ "../../packages/FSharp.Formatting/"
+let formatting = __SOURCE_DIRECTORY__ @@ "../../packages/build/FSharp.Formatting/"
 let docTemplate = "docpage.cshtml"
 
 // Where to look for *.csproj templates (in this order)

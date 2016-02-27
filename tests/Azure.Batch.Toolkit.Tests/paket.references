@@ -1,6 +1,10 @@
-NUnit
-NUnit.Runners
-Azure.Batch
-FSharpx.Core
-FSharp.Data
-FsUnit
+group Toolkit
+    Azure.Batch
+    FSharp.Core
+    FSharpx.Core
+    Newtonsoft.Json
+
+group Test
+    NUnit
+    NUnit.Runners
+    FsUnit
