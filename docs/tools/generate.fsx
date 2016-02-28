@@ -21,7 +21,7 @@ let info =
     "project-author", "John Azariah"
     "project-summary", "A toolkit to simplify interacting with Azure Batch Services"
     "project-github", githubLink
-    "project-nuget", "http://nuget.org/packages/Azure.Batch.Toolkit" ]
+    "project-nuget", "http://nuget.org/packages/Batch.Toolkit" ]
 
 // --------------------------------------------------------------------------------------
 // For typical project, no changes are needed below

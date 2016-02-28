@@ -57,7 +57,7 @@ You're going to have to get the code from [github](https://github.com/Azure/azur
 
 If you haven't already, install the Azure Batch Toolkit from NuGet (or introduce it into your paket.dependencies file if you're using Paket)
 
-    PM> Install-Package Azure.Batch.Toolkit
+    PM> Install-Package Batch.Toolkit
 *)
 
 (**
