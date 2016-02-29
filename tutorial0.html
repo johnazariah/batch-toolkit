@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Tutorial 0: Getting Set Up
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="A toolkit to simplify interacting with Azure Batch Services"/>
+    <meta name="author" content="John Azariah"/>
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"/>
+
+    <link type="text/css" rel="stylesheet" href="/batch-toolkit/content/style.css" />
+    <script type="text/javascript" src="/batch-toolkit/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="http://github.com/johnazariah/batch-toolkit">github page</a></li>
+        </ul>
+        <h3 class="muted"><a href="/batch-toolkit/index.html">Azure.Batch.Toolkit</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+<h1><a name="Tutorial-0-Getting-Set-Up" class="anchor" href="#Tutorial-0-Getting-Set-Up">Tutorial 0: Getting Set Up</a></h1>
+<p>The purpose of this tutorial is to set up your development ecosystem so you can use the Toolkit to interact with Azure Batch.</p>
+<p>When you are done, you should have:
+1. Some commonly used tools you will need to interact with Azure Batch
+1. A VS2013/2015 workspace where you can write programs against Azure Batch
+1. An experience of having interacted with the Batch Service</p>
+<h4><a name="Get-yourself-an-Azure-Account-and-Azure-Batch-Account" class="anchor" href="#Get-yourself-an-Azure-Account-and-Azure-Batch-Account">Get yourself an Azure Account and Azure Batch Account</a></h4>
+<p>You're going to need an active Azure Account to be able to work with batch services.</p>
+<p>If you don't have one already, sign up for a free trial <a href="https://azure.microsoft.com/en-us/pricing/free-trial/?WT.srch=1&amp;WT.mc_ID=SEM_b372mhEg&amp;bknode=BlueKai">here</a>.</p>
+<p>Additionally, you're going to need an Azure <em>Batch</em> Account, which will be associated with your Azure Account for billing purposes.
+Your Azure Batch Account will be your ticket to using Azure Batch Services, as all interactions with the service either implicitly or explicitly require you to provide Azure Batch Credentials.</p>
+<p>If you don't have one already, get one by following the instructions <a href="https://azure.microsoft.com/en-us/documentation/articles/batch-account-create-portal/">here</a>.</p>
+<h4><a name="Get-a-good-storage-viewer" class="anchor" href="#Get-a-good-storage-viewer">Get a good storage viewer</a></h4>
+<p>There are several viewers of Azure storage that are out there.</p>
+<ol>
+<li>Commercial solutions like <a href="http://www.cloudberrylab.com/free-microsoft-azure-explorer.aspx">CloudBerry</a> and <a href="http://www.cerebrata.com/products/azure-management-studio/introduction">Cerebrata</a> have offerings</li>
+<li>Visual Studio 2013/2015 has a decent one built in</li>
+<li>Microsoft <a href="http://storageexplorer.com/">Azure Storage Explorer</a> is free</li>
+</ol>
+<p>Use whatever you like. You'll need to be comfortable interacting with blob storage to see files uploaded and downloaded</p>
+<h4><a name="Build-Batch-Explorer" class="anchor" href="#Build-Batch-Explorer">Build Batch Explorer</a></h4>
+<p>This is a very useful tool to have when interacting with Batch Services. The Batch Services team have released the source for this tool as an (excellent) example of how to interact with the service, but it's a very useful tool in its own right.</p>
+<p>You're going to have to get the code from <a href="https://github.com/Azure/azure-batch-samples">github</a> and build the BatchExplorer project found at <code>CSharp\BatchExplorer</code>. Keep the samples project around so you'll get a sense of what can be achieved going down to the SDK yourself!</p>
+<h4><a name="Install-the-toolkit-from-NuGet" class="anchor" href="#Install-the-toolkit-from-NuGet">Install the toolkit from NuGet</a></h4>
+<p>If you haven't already, install the Azure Batch Toolkit from NuGet (or introduce it into your paket.dependencies file if you're using Paket)</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">PM</span><span class="o">&gt;</span> <span class="i">Install</span><span class="o">-</span><span class="i">Package</span> <span class="i">Batch</span><span class="o">.</span><span class="i">Toolkit</span>
+</code></pre></td>
+</tr>
+</table>
+<p>You're now good to go! Try one of the other tutorials listed on the side of the page.</p>
+
+
+        </div>
+        <div class="span3">
+          <img src="/batch-toolkit/img/logo.png" alt="F# Project" style="width:150px;margin:10px" />  
+          <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
+            <li class="nav-header">Azure.Batch.Toolkit</li>
+            <li><a href="/batch-toolkit/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="http://nuget.org/packages/Batch.Toolkit">Get Library via NuGet</a></li>
+            <li><a href="http://github.com/johnazariah/batch-toolkit">Source Code on GitHub</a></li>
+            <li><a href="/batch-toolkit/license.html">License</a></li>
+            <li><a href="/batch-toolkit/release-notes.html">Release Notes</a></li>
+            
+            <li class="nav-header">Tutorials</li>
+            <li><a href="/batch-toolkit/tutorial0.html">Getting Set Up</a></li>
+            <li><a href="/batch-toolkit/tutorial1.html">Use the DSL to Submit Workload</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="/batch-toolkit/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="http://github.com/johnazariah/batch-toolkit"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"/></a>
+  </body>
+  </html>
