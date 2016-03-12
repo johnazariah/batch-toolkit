@@ -76,7 +76,7 @@ with
     }
 
 type WorkloadArguments = 
-| WorkloadArguments of Map<string, string list>
+| WorkloadArguments of Map<string, Set<string>>
 with
     static member Zero = Map.empty |> WorkloadArguments
     static member (+) (a : WorkloadArguments, b : WorkloadArguments) = 
@@ -84,7 +84,7 @@ with
         let (WorkloadArguments b_args) = b
         let merge (d : Map<_,_>) (KeyValue (k, vs)) =
             match (d.TryFind k) with
-            | Some evs -> evs @ vs |> Map.add k <| d 
+            | Some evs -> evs + vs |> Map.add k <| d 
             | None     -> vs |> Map.add k <| d
         a_args |> Seq.fold merge b_args |> WorkloadArguments
 

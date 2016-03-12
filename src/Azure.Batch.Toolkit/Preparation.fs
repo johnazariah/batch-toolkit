@@ -168,7 +168,7 @@ module internal Preparation =
                     TaskArguments = TaskArguments args
                 }
 
-            let getCrossJoinOfArguments (m : Map<'a, 'b list>) : Map<'a, 'b> seq = 
+            let getCrossJoinOfArguments (m : Map<'a, Set<'b>>) : Map<'a, 'b> seq = 
                 let addKeyAndValue (key, value) (dict : Map<'a, 'b>) = dict.Add (key, value)
                 let joinValue dicts key value = dicts |> Seq.map (addKeyAndValue (key, value))
                 let joinValuesForKey dicts key values = values |> Seq.collect (joinValue dicts key)

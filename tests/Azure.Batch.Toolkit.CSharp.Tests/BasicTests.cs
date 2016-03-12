@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using FSharpx;
 using Microsoft.Azure.Batch;
 using Microsoft.FSharp.Collections;
 using Microsoft.FSharp.Core;
@@ -8,11 +10,49 @@ using NUnit.Framework;
 
 namespace Batch.Toolkit.CSharp.Tests
 {
-    
-
     [TestFixture]
     public class BasicTests
     {
+        //[Test]
+        public async void SimpleWorkflowTest()
+        {
+            if (!File.Exists("batch-config.json") || !File.Exists("storage-config.json"))
+            {
+                return;
+            }
+
+            var batchConfig =
+                JsonConvert.DeserializeObject<Configuration.BatchConfiguration>(File.ReadAllText("batch-config.json"));
+            var storageConfig =
+                JsonConvert.DeserializeObject<Configuration.StorageConfiguration>(
+                    File.ReadAllText("storage-config.json"));
+
+            var simpleCommand = Command.NewSimpleCommand("echo 'Hello World'");
+
+            var simpleWorkload =
+                new WorkloadSpecification(
+                    new FSharpList<WorkloadUnitTemplate>(
+                        new WorkloadUnitTemplate(
+                            new CommandSet(
+                                new FSharpList<CommandWithErrorHandler>(
+                                    new CommandWithErrorHandler(simpleCommand, FSharpOption<Command>.None),
+                                    FSharpList<CommandWithErrorHandler>.Empty),
+                                FSharpList<Command>.Empty),
+                            LocalFiles.Zero,
+                            false),
+                        FSharpList<WorkloadUnitTemplate>.Empty),
+                    LocalFiles.Zero,
+                    WorkloadArguments.Zero);
+
+            await
+                WorkloadOperations.SubmitWorkloadToPoolAsync(
+                    batchConfig,
+                    storageConfig,
+                    Pool.NewNamedPool(
+                        new NamedPool(PoolName.NewPoolName("john"), PoolOperations.GetDefaultPoolSpecification)),
+                    simpleWorkload);
+        }
+
         [Test]
         public void ShouldBeAbleToCreateJobModelTypes()
         {
@@ -55,18 +95,17 @@ namespace Batch.Toolkit.CSharp.Tests
                 from workloadUnitTemplate0 in WorkloadUnitTemplate.Zero.Lift()
                 from workloadUnitTemplate in new WorkloadUnitTemplate(commandSet, localFiles, false).Lift()
                 from workloadArguments0 in WorkloadArguments.Zero.Lift()
-                from workloadArguments in
-                    WorkloadArguments.NewWorkloadArguments(
-                        new Dictionary<string, FSharpList<string>>
-                        {
+                from workloadArguments in WorkloadArguments.NewWorkloadArguments(
+                    new[]
+                    {
+                        new Tuple<string, FSharpSet<string>>(
+                            "users",
+                            new[]
                             {
-                                "users", new[]
-                                {
-                                    "john",
-                                    "pradeep"
-                                }.ToFSharpList()
-                            }
-                        }.ToFSharpMap()).Lift()
+                                "john",
+                                "pradeep"
+                            }.ToFSharpSet())
+                    }.ToFSharpMap()).Lift()
                 from workloadSpecification in new WorkloadSpecification(
                     new[]
                     {
@@ -77,9 +116,9 @@ namespace Batch.Toolkit.CSharp.Tests
                 from taskName in TaskName.NewTaskName("simple-task").Lift()
                 from taskArguments0 in TaskArguments.Zero.Lift()
                 from taskArguments in TaskArguments.NewTaskArguments(
-                    new Dictionary<string, string>
+                    new[]
                     {
-                        {"name", "john"}
+                        new Tuple<string, string>("name", "john")
                     }.ToFSharpMap()).Lift()
                 from defaultTaskSpecification in TaskSpecification.Zero.Lift()
                 from jobName in JobName.NewJobName("simple-job").Lift()
@@ -105,43 +144,6 @@ namespace Batch.Toolkit.CSharp.Tests
                 });
             var output = input.ToFSharpList();
             Assert.AreEqual(5, output.Length);
-        }
-
-        //[Test]
-        public async void SimpleWorkflowTest()
-        {
-            if (!File.Exists("batch-config.json") || !File.Exists("storage-config.json")) return;
-
-            var batchConfig =
-                JsonConvert.DeserializeObject<Configuration.BatchConfiguration>(File.ReadAllText("batch-config.json"));
-            var storageConfig =
-                JsonConvert.DeserializeObject<Configuration.StorageConfiguration>(
-                    File.ReadAllText("storage-config.json"));
-
-            var simpleCommand = Command.NewSimpleCommand("echo 'Hello World'");
-
-            var simpleWorkload =
-                new WorkloadSpecification(
-                    new FSharpList<WorkloadUnitTemplate>(
-                        new WorkloadUnitTemplate(
-                            new CommandSet(
-                                new FSharpList<CommandWithErrorHandler>(
-                                    new CommandWithErrorHandler(simpleCommand, FSharpOption<Command>.None),
-                                    FSharpList<CommandWithErrorHandler>.Empty),
-                                FSharpList<Command>.Empty),
-                            LocalFiles.Zero,
-                            false),
-                        FSharpList<WorkloadUnitTemplate>.Empty),
-                    LocalFiles.Zero,
-                    WorkloadArguments.Zero);
-
-            await
-                WorkloadOperations.SubmitWorkloadToPoolAsync(
-                    batchConfig,
-                    storageConfig,
-                    Pool.NewNamedPool(
-                        new NamedPool(PoolName.NewPoolName("john"), PoolOperations.GetDefaultPoolSpecification)),
-                    simpleWorkload);
         }
     }
 }

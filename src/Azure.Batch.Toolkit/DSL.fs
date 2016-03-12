@@ -34,7 +34,7 @@ module DSL =
     
     let ``:over`` = None
     let ``:range`` parameterName _ parameterValues = 
-        (parameterName, parameterValues)
+        (parameterName, parameterValues |> Set.ofList)
 
     let ``:unit_templates`` = None
     let ``:arguments`` = None

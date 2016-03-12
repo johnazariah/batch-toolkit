@@ -49,7 +49,6 @@
   <ItemGroup>
     <Compile Include="BasicTests.cs" />
     <Compile Include="CreateMonad.cs" />
-    <Compile Include="InteropExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Choose>
