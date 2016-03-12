@@ -34,7 +34,7 @@
         <div class="span9" id="main">
           
 <h1><a name="Tutorial-1-Using-the-DSL" class="anchor" href="#Tutorial-1-Using-the-DSL">Tutorial 1: Using the DSL</a></h1>
-<p>The purpose of this tutorial is to `use the Toolkit DSL to define a very simple workload and submit it.</p>
+<p>The purpose of this tutorial is to use the Toolkit DSL to define a very simple workload and submit it.</p>
 <p>When you are done, you should have:</p>
 <ol>
 <li>An understanding of the basic object model of workloads</li>
@@ -346,10 +346,10 @@ We can now build these objects from our JSON files like so:</p>
 <div class="tip" id="fs12">val ( :finally ) : &#39;a option<br /><br />Full name: Batch.Toolkit.DSL.( :finally )</div>
 <div class="tip" id="fs13">val ( :files ) : &#39;a option<br /><br />Full name: Batch.Toolkit.DSL.( :files )</div>
 <div class="tip" id="fs14">val workload : WorkloadSpecification<br /><br />Full name: Tutorial1.workload</div>
-<div class="tip" id="fs15">val ( :workload ) : &#39;a -&gt; workloadUnitTemplates:WorkloadUnitTemplate list -&gt; &#39;b -&gt; commonFiles:System.IO.FileInfo list -&gt; &#39;c -&gt; arguments:seq&lt;string * string list&gt; -&gt; WorkloadSpecification<br /><br />Full name: Batch.Toolkit.DSL.( :workload )</div>
+<div class="tip" id="fs15">val ( :workload ) : &#39;a -&gt; workloadUnitTemplates:WorkloadUnitTemplate list -&gt; &#39;b -&gt; commonFiles:System.IO.FileInfo list -&gt; &#39;c -&gt; arguments:seq&lt;string * Set&lt;string&gt;&gt; -&gt; WorkloadSpecification<br /><br />Full name: Batch.Toolkit.DSL.( :workload )</div>
 <div class="tip" id="fs16">val ( :unit_templates ) : &#39;a option<br /><br />Full name: Batch.Toolkit.DSL.( :unit_templates )</div>
 <div class="tip" id="fs17">val ( :arguments ) : &#39;a option<br /><br />Full name: Batch.Toolkit.DSL.( :arguments )</div>
-<div class="tip" id="fs18">val ( :range ) : parameterName:&#39;a -&gt; &#39;b -&gt; parameterValues:&#39;c -&gt; &#39;a * &#39;c<br /><br />Full name: Batch.Toolkit.DSL.( :range )</div>
+<div class="tip" id="fs18">val ( :range ) : parameterName:&#39;a -&gt; &#39;b -&gt; parameterValues:&#39;c list -&gt; &#39;a * Set&lt;&#39;c&gt; (requires comparison)<br /><br />Full name: Batch.Toolkit.DSL.( :range )</div>
 <div class="tip" id="fs19">val ( :over ) : &#39;a option<br /><br />Full name: Batch.Toolkit.DSL.( :over )</div>
 <div class="tip" id="fs20">type BatchConfiguration =<br />&#160;&#160;{BatchAccountName: string;<br />&#160;&#160;&#160;BatchAccountKey: string;<br />&#160;&#160;&#160;BatchAccountRegion: string;<br />&#160;&#160;&#160;BatchServiceUri: string;}<br /><br />Full name: Tutorial1.BatchConfiguration</div>
 <div class="tip" id="fs21">BatchConfiguration.BatchAccountName: string</div>
