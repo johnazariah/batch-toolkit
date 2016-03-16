@@ -41,11 +41,75 @@
 <li>You could use the <a href="https://msdn.microsoft.com/library/azure/dn865466.aspx">Powershell</a> interface to script programs to do this.</li>
 <li>You could write programs using a variety of languages (C#, Python) using the <a href="https://msdn.microsoft.com/library/azure/dn865466.aspx">SDK and Client Libraries</a> available.</li>
 <li>You could write programs using a language that isn't currently supported by interacting with the <a href="https://msdn.microsoft.com/library/azure/dn820158.aspx">REST interface</a>.</li>
+<li>You could use this toolkit.</li>
 </ul>
-<p>These approaches afford the greatest flexibility possible in interacting with the Batch Service, but they require the developers to acquire a working knowledge of the ecosystem and to become familiar with common usage patterns and idioms.
-There are <a href="https://github.com/Azure/azure-batch-samples/tree/master/CSharp">several samples</a> to guide this effort.</p>
-<p>However, in many cases, the developer is more familiar with their own domain, and not necessarily able (or willing) to expend the effort to become an expert in programming Azure Batch.
-This toolkit, developed in F#, affords a simpler introduction to using the Batch Service by abstracting out the interactions with the Batch Service and allowing the developer to focus on defining and crafting their own workflows.</p>
+<p>This toolkit enables you to focus on your domain and workflow, and also to reuse and share workload units from other projects.</p>
+<p>The toolkit also provides a little language to express workloads with clarity and composability:</p>
+<p>For example, a the following program defines a workload which performs a 'parametric sweep' over a provided set of user names; and creates and submits a batch job to execute it.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+<span class="l">23: </span>
+<span class="l">24: </span>
+<span class="l">25: </span>
+<span class="l">26: </span>
+<span class="l">27: </span>
+<span class="l">28: </span>
+<span class="l">29: </span>
+<span class="l">30: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">helloUserCommand</span> <span class="o">=</span> 
+        <span class="i">``:parametric_cmd``</span> <span class="s">&quot;echo &#39;Hello %user%&#39;&quot;</span> <span class="i">``:with_params``</span> [<span class="s">&quot;user&quot;</span>]
+    
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">workloadUnitTemplate</span> <span class="o">=</span> 
+        <span class="i">``:unit_template``</span> 
+            <span class="i">``:admin``</span> <span class="k">false</span> 
+            <span class="i">``:main``</span> 
+                [
+                    <span class="i">``:do``</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="i">helloUserCommand</span>
+                ] 
+            <span class="i">``:finally``</span>
+                []
+            <span class="i">``:files``</span> 
+                []
+
+    <span class="k">let</span> <span onmouseout="hideTip(event, 'fs3', 4)" onmouseover="showTip(event, 'fs3', 4)" class="i">workload</span> <span class="o">=</span>
+        <span class="i">``:workload``</span>
+            <span class="i">``:unit_templates``</span> 
+                [
+                    <span onmouseout="hideTip(event, 'fs2', 5)" onmouseover="showTip(event, 'fs2', 5)" class="i">workloadUnitTemplate</span> 
+                ]
+            <span class="i">``:files``</span> 
+                []
+            <span class="i">``:arguments``</span> 
+                [
+                    <span class="i">``:range``</span> <span class="s">&quot;user&quot;</span> <span class="i">``:over``</span> [<span class="s">&quot;John&quot;</span>; <span class="s">&quot;Ivan&quot;</span>; <span class="s">&quot;Pablo&quot;</span>]
+                ]
+
+    <span class="i">runSampleWorkload</span> <span class="i">workload</span>
+        
+</code></pre></td>
+</tr>
+</table>
 <p>The best way to use this toolkit would be to write your workflow in F#, because that allows for the use of the little DSL present in the toolkit.
 The library is, however, interoperable with C#, and it's possible (although not as elegant) to develop these workflows there as well.</p>
 <p>An important thing to note is that the workload you are designing can involve executables written in any language - and indeed, which run on any supported platform.
@@ -76,6 +140,9 @@ also want to read the <a href="https://github.com/johnazariah/batch-toolkit/blob
 redistribution for both commercial and non-commercial purposes. For more information see the
 <a href="https://github.com/johnazariah/batch-toolkit/blob/master/LICENSE.txt">License file</a> in the GitHub repository.</p>
 
+<div class="tip" id="fs1">val helloUserCommand : obj<br /><br />Full name: Index.helloUserCommand</div>
+<div class="tip" id="fs2">val workloadUnitTemplate : obj<br /><br />Full name: Index.workloadUnitTemplate</div>
+<div class="tip" id="fs3">val workload : obj<br /><br />Full name: Index.workload</div>
 
         </div>
         <div class="span3">

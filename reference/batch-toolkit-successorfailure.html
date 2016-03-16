@@ -74,8 +74,8 @@
             ( &lt;!&gt; ) m f
           </code>
           <div class="tip" id="33">
-            <strong>Signature:</strong> m:SuccessOrFailure&lt;&#39;?7425&gt; -&gt; f:(&#39;?7425 -&gt; &#39;?7426) -&gt; SuccessOrFailure&lt;&#39;?7426&gt;<br />
-                          <strong>Type parameters:</strong> '?7425, '?7426          </div>
+            <strong>Signature:</strong> m:SuccessOrFailure&lt;&#39;b&gt; -&gt; f:(&#39;b -&gt; &#39;c) -&gt; SuccessOrFailure&lt;&#39;c&gt;<br />
+                          <strong>Type parameters:</strong> 'b, 'c          </div>
         </td>
         <td class="xmldoc">
             <a href="http://github.com/johnazariah/batch-toolkit/tree/master/src/Azure.Batch.Toolkit/SuccessOrFailure.fs#L22-22" class="github-link">
@@ -112,8 +112,8 @@
             foldrM f z
           </code>
           <div class="tip" id="35">
-            <strong>Signature:</strong> f:(&#39;?7446 -&gt; &#39;?7447 -&gt; SuccessOrFailure&lt;&#39;?7447&gt;) -&gt; z:&#39;?7447 -&gt; &#39;?7446 list -&gt; SuccessOrFailure&lt;&#39;?7447&gt;<br />
-                          <strong>Type parameters:</strong> '?7446, '?7447          </div>
+            <strong>Signature:</strong> f:(&#39;b -&gt; &#39;c -&gt; SuccessOrFailure&lt;&#39;c&gt;) -&gt; z:&#39;c -&gt; &#39;b list -&gt; SuccessOrFailure&lt;&#39;c&gt;<br />
+                          <strong>Type parameters:</strong> 'b, 'c          </div>
         </td>
         <td class="xmldoc">
             <a href="http://github.com/johnazariah/batch-toolkit/tree/master/src/Azure.Batch.Toolkit/SuccessOrFailure.fs#L36-36" class="github-link">
@@ -130,8 +130,8 @@
             getOrThrow _arg1
           </code>
           <div class="tip" id="36">
-            <strong>Signature:</strong> _arg1:SuccessOrFailure&lt;&#39;?7430&gt; -&gt; &#39;?7430<br />
-                          <strong>Type parameters:</strong> '?7430          </div>
+            <strong>Signature:</strong> _arg1:SuccessOrFailure&lt;&#39;b&gt; -&gt; &#39;b<br />
+                          <strong>Type parameters:</strong> 'b          </div>
         </td>
         <td class="xmldoc">
             <a href="http://github.com/johnazariah/batch-toolkit/tree/master/src/Azure.Batch.Toolkit/SuccessOrFailure.fs#L24-24" class="github-link">
