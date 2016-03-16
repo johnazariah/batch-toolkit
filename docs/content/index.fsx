@@ -16,12 +16,46 @@ There's a [ton of documentation][BATCH_DOCS] of how to do this because the Batch
 * You could use the [Powershell][PS] interface to script programs to do this.
 * You could write programs using a variety of languages (C#, Python) using the [SDK and Client Libraries][SDK] available. 
 * You could write programs using a language that isn't currently supported by interacting with the [REST interface][REST]. 
+* You could use this toolkit.
 
-These approaches afford the greatest flexibility possible in interacting with the Batch Service, but they require the developers to acquire a working knowledge of the ecosystem and to become familiar with common usage patterns and idioms. 
-There are [several samples][SAMPLES] to guide this effort.
+This toolkit enables you to focus on your domain and workflow, and also to reuse and share workload units from other projects.
 
-However, in many cases, the developer is more familiar with their own domain, and not necessarily able (or willing) to expend the effort to become an expert in programming Azure Batch. 
-This toolkit, developed in F#, affords a simpler introduction to using the Batch Service by abstracting out the interactions with the Batch Service and allowing the developer to focus on defining and crafting their own workflows.
+The toolkit also provides a little language to express workloads with clarity and composability:
+
+For example, a the following program defines a workload which performs a 'parametric sweep' over a provided set of user names; and creates and submits a batch job to execute it. 
+*)
+
+    let helloUserCommand = 
+        ``:parametric_cmd`` "echo 'Hello %user%'" ``:with_params`` ["user"]
+    
+    let workloadUnitTemplate = 
+        ``:unit_template`` 
+            ``:admin`` false 
+            ``:main`` 
+                [
+                    ``:do`` helloUserCommand
+                ] 
+            ``:finally``
+                []
+            ``:files`` 
+                []
+
+    let workload =
+        ``:workload``
+            ``:unit_templates`` 
+                [
+                    workloadUnitTemplate 
+                ]
+            ``:files`` 
+                []
+            ``:arguments`` 
+                [
+                    ``:range`` "user" ``:over`` ["John"; "Ivan"; "Pablo"]
+                ]
+
+    runSampleWorkload workload
+        
+(**
 
 The best way to use this toolkit would be to write your workflow in F#, because that allows for the use of the little DSL present in the toolkit.
 The library is, however, interoperable with C#, and it's possible (although not as elegant) to develop these workflows there as well.
@@ -56,9 +90,11 @@ Samples & documentation
 
 1. [Tutorial 0][T0] Get your development environment set up for using Azure Batch, and the toolkit
 1. [Tutorial 1][T1] Use the DSL to create your first workload with a simple command and submit it
+1. [Tutorial 2][T2] A lap around the Job Object Model
 
 [T0]: tutorial0.html
 [T1]: tutorial1.html
+[T2]: tutorial2.html
 *)
 
 (**

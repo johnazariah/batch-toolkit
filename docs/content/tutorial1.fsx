@@ -7,7 +7,7 @@
 Tutorial 1: Using the DSL
 ========================
 
-The purpose of this tutorial is to `use the Toolkit DSL to define a very simple workload and submit it.
+The purpose of this tutorial is to use the Toolkit DSL to define a very simple workload and submit it.
 
 When you are done, you should have:
 
