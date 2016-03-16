@@ -1,7 +1,7 @@
 [![Issue Stats](http://issuestats.com/github/johnazariah/batch-toolkit-fsharp/badge/issue)](http://issuestats.com/github/johnazariah/batch-toolkit-fsharp)
 [![Issue Stats](http://issuestats.com/github/johnazariah/batch-toolkit-fsharp/badge/pr)](http://issuestats.com/github/johnazariah/batch-toolkit-fsharp)
 
-# batch-toolkit-fsharp
+# Azure.Batch.Toolkit
 
 [Azure Batch Services](https://azure.microsoft.com/en-us/services/batch/) provides the ability to run batch computing processes at cloud scale.
 
